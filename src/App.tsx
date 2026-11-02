@@ -8,7 +8,27 @@ import TaskList from './components/TaskList'
 import FilterBar from './components/FilterBar'
 
 function App() {
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [tasks, setTasks] = useState<Task[]>([
+    {
+      id: 1,
+      title: 'Study React',
+      priority: 'high',
+      done: false,
+    },
+    {
+      id: 2,
+      title: 'Complete assignment',
+      priority: 'medium',
+      done: false,
+    },
+    {
+      id: 3,
+      title: 'Review TypeScript',
+      priority: 'low',
+      done: true,
+    },
+  ])
+
   const [currentFilter, setCurrentFilter] = useState<FilterType>('all')
 
   function addTask(title: string, priority: Priority) {
