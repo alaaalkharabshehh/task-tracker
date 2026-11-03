@@ -1,0 +1,41 @@
+// Task Tracker database design
+// Paste this into https://dbdiagram.io to see the diagram
+
+Table users {
+  id integer [primary key]
+  name varchar(100) [not null]
+  email varchar(150) [not null, unique]
+  created_at timestamp [default: `now()`]
+}
+
+Table projects {
+  id integer [primary key]
+  name varchar(100) [not null]
+  created_at timestamp [default: `now()`]
+}
+
+Table tasks {
+  id integer [primary key]
+  title varchar(200) [not null]
+  priority varchar(10) [not null, default: 'medium', note: 'low, medium or high']
+  done boolean [not null, default: false]
+  due_date date
+  user_id integer [not null, ref: > users.id]      // many tasks belong to one user
+  project_id integer [not null, ref: > projects.id] // many tasks belong to one project
+  created_at timestamp [default: `now()`]
+}
+
+Table tags {
+  id integer [primary key]
+  name varchar(50) [not null, unique]
+}
+
+// Linking table for the many-to-many relationship between tasks and tags
+Table task_tags {
+  task_id integer [ref: > tasks.id]
+  tag_id integer [ref: > tags.id]
+
+  indexes {
+    (task_id, tag_id) [pk]
+  }
+}
